@@ -11,6 +11,7 @@ import com.salesforce.multicloudj.common.gcp.GcpConstants;
 import com.salesforce.multicloudj.common.gcp.util.MockGoogleCredentialsFactory;
 import com.salesforce.multicloudj.common.gcp.util.TestsUtilGcp;
 import com.salesforce.multicloudj.iam.client.AbstractIamIT;
+import com.salesforce.multicloudj.iam.client.IamClient;
 import com.salesforce.multicloudj.iam.driver.AbstractIam;
 import org.junit.jupiter.api.Assertions;
 
@@ -122,7 +123,22 @@ public class GcpIamIT extends AbstractIamIT {
 				iamClient.close();
 			}
 		}
-	}
+
+        @Override
+        public String getTestIdentityName() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String getTrustedPrincipal() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean supportsIdentityApis() {
+            return false;
+        }
+    }
 
 }
 
