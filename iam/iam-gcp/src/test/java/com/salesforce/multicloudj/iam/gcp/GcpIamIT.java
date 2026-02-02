@@ -204,11 +204,18 @@ public class GcpIamIT extends AbstractIamIT {
 
         @Override
         public List<String> getTestPolicyActions() {
-            return List.of("roles/storage.objectViewer", "roles/storage.objectCreator");
+            // Use substrate-neutral actions that will be translated to GCP roles
+            return List.of("storage:GetObject", "storage:PutObject");
         }
 
         @Override
         public String getTestPolicyName() {
+            return "storage:GetObject";
+        }
+
+        @Override
+        public String getRoleName() {
+            // Return the translated GCP role for policy retrieval
             return "roles/storage.objectViewer";
         }
 

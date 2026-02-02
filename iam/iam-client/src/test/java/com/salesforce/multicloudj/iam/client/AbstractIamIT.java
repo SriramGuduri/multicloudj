@@ -53,6 +53,12 @@ public abstract class AbstractIamIT {
 
         String getTestPolicyName();
 
+        default String getTestAction() {
+            return "storage:GetObject";
+        }
+
+        String getRoleName();
+
         default boolean supportsPolicyAPIs() {
             return true;
         }
@@ -133,7 +139,7 @@ public abstract class AbstractIamIT {
 				.version(harness.getPolicyVersion())
 				.statement(Statement.builder()
 						.effect(harness.getTestPolicyEffect())
-						.action(harness.getTestPolicyName())
+						.action(harness.getTestAction())
 						.build())
 				.build();
 
@@ -148,7 +154,7 @@ public abstract class AbstractIamIT {
 				GetInlinePolicyDetailsRequest.builder()
 						.identityName(harness.getIdentityName())
 						.policyName(null)
-						.roleName(harness.getTestPolicyName())
+						.roleName(harness.getRoleName())
 						.tenantId(harness.getTenantId())
 						.region(harness.getRegion())
 						.build()
@@ -196,7 +202,7 @@ public abstract class AbstractIamIT {
 				.version(harness.getPolicyVersion())
 				.statement(Statement.builder()
 						.effect(harness.getTestPolicyEffect())
-						.action(harness.getTestPolicyName())
+						.action(harness.getTestAction())
 						.build())
 				.build();
 
