@@ -1,6 +1,7 @@
 package com.salesforce.multicloudj.blob.inmemory;
 
 import com.google.auto.service.AutoService;
+import com.google.common.collect.Lists;
 import com.salesforce.multicloudj.blob.driver.AbstractBlobStore;
 import com.salesforce.multicloudj.blob.driver.BlobIdentifier;
 import com.salesforce.multicloudj.blob.driver.BlobInfo;
@@ -578,7 +579,7 @@ public class InMemoryBlobStore extends AbstractBlobStore {
     boolean isTruncated = endIndex < allBlobs.size();
     String nextToken = isTruncated ? pageBlobs.get(pageBlobs.size() - 1).getKey() : null;
 
-    return new ListBlobsPageResponse(pageBlobs, isTruncated, nextToken);
+    return new ListBlobsPageResponse(pageBlobs, List.of(), isTruncated, nextToken);
   }
 
   @Override
@@ -705,9 +706,7 @@ public class InMemoryBlobStore extends AbstractBlobStore {
         .map(
             entry ->
                 new UploadPartResponse(
-                    entry.getKey(),
-                    entry.getValue().getEtag(),
-                    entry.getValue().getData().length))
+                    entry.getKey(), entry.getValue().getEtag(), entry.getValue().getData().length))
         .sorted(Comparator.comparingInt(UploadPartResponse::getPartNumber))
         .collect(Collectors.toList());
   }
